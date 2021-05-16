@@ -34,4 +34,4 @@ def get_assignment_message(user_name: str, deck_name: str) -> str:
     return msg
 
 def is_serialized_user(arg: str) -> bool:
-    return search(arg, serialized_user_regex) != None
+    return search(serialized_user_regex, arg) != None

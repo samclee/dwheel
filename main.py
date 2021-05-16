@@ -1,4 +1,3 @@
-import discord
 import os
 
 from discord.ext import commands
@@ -15,12 +14,10 @@ async def on_ready():
 
 @bot.command()
 async def deck_assign(ctx, *args):
-    deck_names = _validate_deck_names(*args)
-    if isinstance(deck_names, str):
-        await ctx.channel.send(deck_names)
-        return
-    
+    deck_names = _extract_deck_names(*args)
     users = ctx.message.mentions
+
+    print(deck_names)
 
     # validate count for both
     if len(deck_names) < len(users):
@@ -36,24 +33,17 @@ async def deck_assign(ctx, *args):
         print(f"Sending assignment to {user.name}")
         await user.send(get_assignment_message(user.name, deck_name))
 
-    await ctx.channel.send("Decks sent to all player")
+    await ctx.channel.send("Decks sent to all players")
 
-def _validate_deck_names(*args)->Union[List[str], str]:
-    if len(args) == 0:
-        return "Too few arguments given!"
+def _extract_deck_names(*args) -> List[str]:
+    deck_names = []
+    for arg in args:
+        if is_serialized_user(arg):
+            continue
 
-    deck_names_str = args[0]
-    
-    # validate deck names
-    if deck_names_str.count(",") == 0:
-        return "Invalid deck names list!"
+        arg = arg.strip(',')
+        deck_names.append(arg)
 
-    deck_names = deck_names_str.split(',')
-    deck_names = list(map(lambda x: x.strip(), deck_names))
-    deck_names = list(filter(lambda x: len(x) > 0, deck_names))
-    print(deck_names)
-
-    print("Validation succeeded")
     return deck_names
 
 bot.run(os.getenv('TOKEN'))
