@@ -25,7 +25,7 @@ def get_assignment_message(user_name: str, deck_name: str) -> str:
 
     msg = (
         "==========\n"
-        f"Hello {user_name}, this week you'll be piloting the\"{deck_name}\" archtype.\n"
+        f"Hello {user_name}, this week you'll be piloting the \"{deck_name}\" archtype.\n"
         f"Try checking out some of the decks here: {url} (link may not actually exist lol)\n"
         "Good luck duelist!\n"
         "==========\n"

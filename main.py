@@ -11,7 +11,7 @@ bot = commands.Bot(command_prefix=">")
 
 @bot.event
 async def on_ready():
-    print('online baybeeeeeeeeeee')
+    print('Let\'s Rev it Up!')
 
 @bot.command()
 async def deck_assign(ctx, *args):
@@ -35,6 +35,8 @@ async def deck_assign(ctx, *args):
 
         print(f"Sending assignment to {user.name}")
         await user.send(get_assignment_message(user.name, deck_name))
+
+    await ctx.channel.send("Decks sent to all player")
 
 def _validate_deck_names(*args)->Union[List[str], str]:
     if len(args) == 0:
